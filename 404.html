@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Happ Import</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        min-height: 100vh;
+        padding: 24px;
+      }
+
+      main {
+        max-width: 560px;
+        text-align: center;
+      }
+
+      a {
+        overflow-wrap: anywhere;
+      }
+
+      .error {
+        color: #b42318;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Opening Happ...</h1>
+      <p id="status">Preparing redirect.</p>
+      <p id="manual"></p>
+    </main>
+
+    <script>
+      (function () {
+        var status = document.getElementById("status");
+        var manual = document.getElementById("manual");
+        var marker = "/sub/";
+        var markerIndex = window.location.pathname.indexOf(marker);
+
+        function showError(message) {
+          document.title = "Happ Import Error";
+          status.className = "error";
+          status.textContent = message;
+        }
+
+        if (markerIndex === -1) {
+          showError("Open this page with /sub/<encoded-url> in the path.");
+          return;
+        }
+
+        var encodedSubscriptionUrl = window.location.pathname.slice(
+          markerIndex + marker.length
+        );
+
+        if (!encodedSubscriptionUrl) {
+          showError("Subscription URL is missing.");
+          return;
+        }
+
+        var subscriptionUrl;
+
+        try {
+          subscriptionUrl = decodeURIComponent(encodedSubscriptionUrl);
+        } catch (error) {
+          showError("Subscription URL is not valid percent-encoded data.");
+          return;
+        }
+
+        if (!/^https?:\/\//i.test(subscriptionUrl)) {
+          showError("Subscription URL must start with http:// or https://.");
+          return;
+        }
+
+        var happUrl = "happ://add/" + subscriptionUrl;
+        var manualLink = document.createElement("a");
+
+        status.textContent = "Redirecting to Happ.";
+        manualLink.href = happUrl;
+        manualLink.textContent = "Open Happ manually";
+        manual.replaceChildren(manualLink);
+
+        window.location.replace(happUrl);
+      })();
+    </script>
+  </body>
+</html>
