@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Happ Import</title>
+    <title>Friend Botik</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -35,8 +35,8 @@
   </head>
   <body>
     <main>
-      <h1>Opening Happ...</h1>
-      <p id="status">Preparing redirect.</p>
+      <h1>Friend Botik ❤️</h1>
+      <p id="status">Botik preparing a redirect...</p>
       <p id="manual"></p>
     </main>
 
@@ -44,52 +44,130 @@
       (function () {
         var status = document.getElementById("status");
         var manual = document.getElementById("manual");
-        var marker = "/sub/";
-        var markerIndex = window.location.pathname.indexOf(marker);
+
+        var HAPP_BASE64_ROUTE_RULES = "...";
+
+        var V2RAYTUN_BASE64_ROUTE_RULES =
+          "eyJiYWxhbmNlcnMiOltdLCJpZCI6IkZDQUVFMERGLTNEMTQtNDQyOS04NUJGLTgyRkNGQjhGODczRCIsImRvbWFpblN0cmF0ZWd5IjoiQXNJcyIsInJ1bGVzIjpbeyJfX25hbWVfXyI6IkRpcmVjdCBSVSIsImlkIjoiNDUyNEZFOUItMUI0OC00MzNGLUE3QkMtRTY2MjM2N0M4MjE2IiwiaXAiOlsiZ2VvaXA6cnUiXSwib3V0Ym91bmRUYWciOiJkaXJlY3QiLCJ0eXBlIjoiZmllbGQiLCJkb21haW4iOlsicmVnZXhwOi4qXFxcXC5ydSQiLCJyZWdleHA6LipcXFxcLtGA0YQkIiwicmVnZXhwOi4qXFxcXC54bi0tcDFhaSQiLCJnZW9zaXRlOmNhdGVnb3J5LXJ1XCIiLCJnZW9zaXRlOmNhdGVnb3J5LWJhbmstcnUiLCJnZW9zaXRlOmNhdGVnb3J5LWVjb21tZXJjZS1ydSIsImdlb3NpdGU6Y2F0ZWdvcnktYmV0dGluZy1ydSIsImdlb3NpdGU6Y2F0ZWdvcnktZW50ZXJ0YWlubWVudC1ydSIsImdlb3NpdGU6Y2F0ZWdvcnktZ292LXJ1IiwiZ2Vvc2l0ZTpjYXRlZ29yeS1tZWRpYS1ydSIsImdlb3NpdGU6Y2F0ZWdvcnktbWVkaWNpbmUtcnUiLCJnZW9zaXRlOmNhdGVnb3J5LXJldGFpbC1ydSIsImdlb3NpdGU6Y2F0ZWdvcnktcnUiLCJnZW9zaXRlOmNhdGVnb3J5LXRyYXZlbC1ydSIsImdlb3NpdGU6Z2Vub3Rlay1ydSIsImdlb3NpdGU6aWRlY28tcnUiLCJnZW9zaXRlOm10cy1ydSIsImdlb3NpdGU6bXlvZmZpY2UtcnUiLCJnZW9zaXRlOnQyLXJ1IiwiZ2Vvc2l0ZTp0YmFuay1ydSIsImdlb3NpdGU6dGxkLXJ1Il19LHsiX19uYW1lX18iOiJCbG9jayBBRFMiLCJpZCI6IjBDRDg4RjZELURFMTQtNDJDRi04QzY1LUE2OTY3NUM1OTE4MiIsIm91dGJvdW5kVGFnIjoiYmxvY2siLCJ0eXBlIjoiZmllbGQiLCJkb21haW4iOlsiZ2Vvc2l0ZTpjYXRlZ29yeS1hZHMiLCJnZW9zaXRlOmNhdGVnb3J5LWFkcy1hbGwiXX1dLCJuYW1lIjoiVlBOIEZyaWVuZCBSb3V0aW5nIiwiZG9tYWluTWF0Y2hlciI6Imh5YnJpZCJ9";
 
         function showError(message) {
-          document.title = "Happ Import Error";
-          status.className = "error";
-          status.textContent = message;
+          document.title = "Import Error";
+
+          if (status) {
+            status.className = "error";
+            status.textContent = message;
+          }
+
+          if (manual) {
+            manual.replaceChildren();
+          }
         }
 
-        if (markerIndex === -1) {
-          showError("Open this page with /sub/<encoded-url> in the path.");
-          return;
+        function redirectTo(appName, deepLink) {
+          document.title = "Open " + appName;
+
+          if (status) {
+            status.className = "";
+            status.textContent = "Redirecting to " + appName + ".";
+          }
+
+          if (manual) {
+            var manualLink = document.createElement("a");
+            manualLink.href = deepLink;
+            manualLink.textContent = "Open " + appName + " manually";
+            manual.replaceChildren(manualLink);
+          }
+
+          window.location.replace(deepLink);
         }
 
-        var encodedSubscriptionUrl = window.location.pathname.slice(
-          markerIndex + marker.length
-        );
+        function decodeSubscription(encodedSubscriptionUrl) {
+          if (!encodedSubscriptionUrl) {
+            throw new Error("Subscription URL is missing.");
+          }
 
-        if (!encodedSubscriptionUrl) {
-          showError("Subscription URL is missing.");
-          return;
+          var subscriptionUrl;
+
+          try {
+            subscriptionUrl = decodeURIComponent(encodedSubscriptionUrl);
+          } catch (error) {
+            throw new Error("Subscription URL is not valid percent-encoded data.");
+          }
+
+          if (!/^https?:\/\//i.test(subscriptionUrl)) {
+            throw new Error("Subscription URL must start with http:// or https://.");
+          }
+
+          return subscriptionUrl;
         }
 
-        var subscriptionUrl;
+        var path = window.location.pathname;
 
         try {
-          subscriptionUrl = decodeURIComponent(encodedSubscriptionUrl);
+          var happSubMarker = "/happ/sub/";
+          var v2raytunSubMarker = "/v2raytun/sub/";
+
+          if (path.endsWith("/happ/route_rules")) {
+            if (!HAPP_BASE64_ROUTE_RULES || HAPP_BASE64_ROUTE_RULES === "...") {
+              showError("HAPP route rules are missing.");
+              return;
+            }
+
+            redirectTo(
+              "Happ",
+              "happ://routing//add/" + HAPP_BASE64_ROUTE_RULES
+            );
+            return;
+          }
+
+          if (path.endsWith("/v2raytun/route_rules")) {
+            redirectTo(
+              "V2RayTun",
+              "v2raytun://import_route/" + V2RAYTUN_BASE64_ROUTE_RULES
+            );
+            return;
+          }
+
+          var happSubIndex = path.indexOf(happSubMarker);
+
+          if (happSubIndex !== -1) {
+            var encodedHappSubscriptionUrl = path.slice(
+              happSubIndex + happSubMarker.length
+            );
+
+            var happSubscriptionUrl = decodeSubscription(encodedHappSubscriptionUrl);
+
+            redirectTo(
+              "Happ",
+              "happ://add/" + happSubscriptionUrl
+            );
+            return;
+          }
+
+          var v2raytunSubIndex = path.indexOf(v2raytunSubMarker);
+
+          if (v2raytunSubIndex !== -1) {
+            var encodedV2RayTunSubscriptionUrl = path.slice(
+              v2raytunSubIndex + v2raytunSubMarker.length
+            );
+
+            var v2raytunSubscriptionUrl = decodeSubscription(
+              encodedV2RayTunSubscriptionUrl
+            );
+
+            redirectTo(
+              "V2RayTun",
+              "v2raytun://import/" + v2raytunSubscriptionUrl
+            );
+            return;
+          }
+
+          showError(
+            "Unsupported path. Use /happ/sub/<encoded-url>, /happ/route_rules, /v2raytun/sub/<encoded-url>, or /v2raytun/route_rules."
+          );
         } catch (error) {
-          showError("Subscription URL is not valid percent-encoded data.");
-          return;
+          showError(error.message || "Import failed.");
         }
-
-        if (!/^https?:\/\//i.test(subscriptionUrl)) {
-          showError("Subscription URL must start with http:// or https://.");
-          return;
-        }
-
-        var happUrl = "happ://add/" + subscriptionUrl;
-        var manualLink = document.createElement("a");
-
-        status.textContent = "Redirecting to Happ.";
-        manualLink.href = happUrl;
-        manualLink.textContent = "Open Happ manually";
-        manual.replaceChildren(manualLink);
-
-        window.location.replace(happUrl);
       })();
     </script>
   </body>
