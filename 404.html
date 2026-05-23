@@ -105,11 +105,6 @@
           var v2raytunSubMarker = "/v2raytun/sub/";
 
           if (path.endsWith("/happ/route_rules")) {
-            if (!HAPP_BASE64_ROUTE_RULES || HAPP_BASE64_ROUTE_RULES === "...") {
-              showError("HAPP route rules are missing.");
-              return;
-            }
-
             redirectTo(
               "Happ",
               "happ://routing//add/" + HAPP_ROUTE_RULES
