@@ -45,6 +45,7 @@
         var status = document.getElementById("status");
         var manual = document.getElementById("manual");
 
+        var V2RAYTUN_RULESET_URL = "https://raw.githubusercontent.com/luwqz1/proxy-friend/refs/heads/main/ruleset.json"
         var HAPP_ROUTE_RULES = "eyJSZW1vdGVETlNUeXBlIjoiRG9VIiwiRG5zSG9zdHMiOnt9LCJEaXJlY3RJcCI6W10sIkRvbWVzdGljRE5TVHlwZSI6IkRvVSIsIlByb3h5SXAiOltdLCJHZW9zaXRlVXJsIjoiaHR0cHM6XC9cL2dpdGh1Yi5jb21cL0xveWFsc29sZGllclwvdjJyYXktcnVsZXMtZGF0XC9yZWxlYXNlc1wvbGF0ZXN0XC9kb3dubG9hZFwvZ2Vvc2l0ZS5kYXQiLCJEb21haW5TdHJhdGVneSI6IkFzSXMiLCJCbG9ja1NpdGVzIjpbXSwiR2VvaXBVcmwiOiJodHRwczpcL1wvZ2l0aHViLmNvbVwvTG95YWxzb2xkaWVyXC92MnJheS1ydWxlcy1kYXRcL3JlbGVhc2VzXC9sYXRlc3RcL2Rvd25sb2FkXC9nZW9pcC5kYXQiLCJHbG9iYWxQcm94eSI6dHJ1ZSwiQmxvY2tJcCI6W10sIkxhc3RVcGRhdGVkIjoxNzc5NTM4Mzk0LCJSZW1vdGVETlNEb21haW4iOiJodHRwczpcL1wvY2xvdWRmbGFyZS1kbnMuY29tXC9kbnMtcXVlcnkiLCJEaXJlY3RTaXRlcyI6W10sIkRvbWVzdGljRE5TSXAiOiI4LjguOC44IiwiRmFrZURucyI6ZmFsc2UsIlByb3h5U2l0ZXMiOltdLCJOYW1lIjoiVlBOIEZyaWVuZCIsIlJvdXRlT3JkZXIiOiJibG9jay1kaXJlY3QtcHJveHkiLCJVc2VDaHVua0ZpbGVzIjpmYWxzZSwiUmVtb3RlRE5TSXAiOiIxLjEuMS4xIiwiRG9tZXN0aWNETlNEb21haW4iOiJodHRwczpcL1wvZG5zLmdvb2dsZVwvZG5zLXF1ZXJ5In0=";
 
         function showError(message) {
@@ -112,6 +113,14 @@
             return;
           }
 
+          if (path.endsWith("/v2raytun/ruleset")) {
+            redirectTo(
+              "v2RayTun",
+              "v2raytun://import-ruleset/" + V2RAYTUN_RULESET_URL
+            );
+            return;
+          }
+
           var happSubIndex = path.indexOf(happSubMarker);
 
           if (happSubIndex !== -1) {
@@ -147,7 +156,7 @@
           }
 
           showError(
-            "Unsupported path. Use /happ/route_rules, /happ/sub/<encoded-url> or /v2raytun/sub/<encoded-url>"
+            "Unsupported path. Use /happ/route_rules, /happ/sub/<encoded-url>, /v2raytun/ruleset or /v2raytun/sub/<encoded-url>"
           );
         } catch (error) {
           showError(error.message || "Import failed.");
