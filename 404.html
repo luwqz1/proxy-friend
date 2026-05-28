@@ -45,8 +45,7 @@
         var status = document.getElementById("status");
         var manual = document.getElementById("manual");
 
-        var V2RAYTUN_RULESET_URL = "https://raw.githubusercontent.com/luwqz1/proxy-friend/refs/heads/main/ruleset.json"
-        var HAPP_ROUTE_RULES = "eyJSZW1vdGVETlNUeXBlIjoiRG9VIiwiRG5zSG9zdHMiOnt9LCJEaXJlY3RJcCI6W10sIkRvbWVzdGljRE5TVHlwZSI6IkRvVSIsIlByb3h5SXAiOltdLCJHZW9zaXRlVXJsIjoiaHR0cHM6XC9cL2dpdGh1Yi5jb21cL0xveWFsc29sZGllclwvdjJyYXktcnVsZXMtZGF0XC9yZWxlYXNlc1wvbGF0ZXN0XC9kb3dubG9hZFwvZ2Vvc2l0ZS5kYXQiLCJEb21haW5TdHJhdGVneSI6IkFzSXMiLCJCbG9ja1NpdGVzIjpbXSwiR2VvaXBVcmwiOiJodHRwczpcL1wvZ2l0aHViLmNvbVwvTG95YWxzb2xkaWVyXC92MnJheS1ydWxlcy1kYXRcL3JlbGVhc2VzXC9sYXRlc3RcL2Rvd25sb2FkXC9nZW9pcC5kYXQiLCJHbG9iYWxQcm94eSI6dHJ1ZSwiQmxvY2tJcCI6W10sIkxhc3RVcGRhdGVkIjoxNzc5NTM4Mzk0LCJSZW1vdGVETlNEb21haW4iOiJodHRwczpcL1wvY2xvdWRmbGFyZS1kbnMuY29tXC9kbnMtcXVlcnkiLCJEaXJlY3RTaXRlcyI6W10sIkRvbWVzdGljRE5TSXAiOiI4LjguOC44IiwiRmFrZURucyI6ZmFsc2UsIlByb3h5U2l0ZXMiOltdLCJOYW1lIjoiVlBOIEZyaWVuZCIsIlJvdXRlT3JkZXIiOiJibG9jay1kaXJlY3QtcHJveHkiLCJVc2VDaHVua0ZpbGVzIjpmYWxzZSwiUmVtb3RlRE5TSXAiOiIxLjEuMS4xIiwiRG9tZXN0aWNETlNEb21haW4iOiJodHRwczpcL1wvZG5zLmdvb2dsZVwvZG5zLXF1ZXJ5In0=";
+        var V2RAYTUN_ROUTE_RULES = "eyJiYWxhbmNlcnMiOltdLCJkb21haW5TdHJhdGVneSI6IkFzSXMiLCJpZCI6IjJGQzc4RURGLUYwNEUtNDI3MS1CNjhCLTRCMzI5QzIwM0VGMiIsIm5hbWUiOiJWUE4gRnJpZW5kIiwicnVsZXMiOlt7InR5cGUiOiJmaWVsZCIsImlkIjoiMTBBQTRCMjEtRTFFQy00NTZFLTlDNEMtM0RCOTkxODIzN0M0IiwiZG9tYWluIjpbInJlZ2V4cDouKlxcXFwuc3UkIiwicmVnZXhwOi4qXFxcXC5ydSQiLCJyZWdleHA6LipcXFxcLnhuLS1wMWFpJCIsInJlZ2V4cDouKlxcXFwueG4tLXAxYWNmJCIsInJlZ2V4cDouKlxcXFwueG4tLTgwYXNlaGRiJCIsInJlZ2V4cDouKlxcXFwueG4tLWMxYXZnJCIsInJlZ2V4cDouKlxcXFwueG4tLTgwYXN3ZyQiLCJkb21haW46cnUiLCJkb21haW46eG4tLXAxYWkiLCJkb21haW46c3UiLCJkb21haW46eG4tLXAxYWNmIiwiZG9tYWluOnhuLS04MGFzZWhkYiIsImRvbWFpbjp4bi0tYzFhdmciLCJkb21haW46eG4tLTgwYXN3ZyIsImRvbWFpbjphdml0by5zdCIsImdlb3NpdGU6Y2F0ZWdvcnktcnUiLCJkb21haW46dmsuY29tIiwiZG9tYWluOnZrLnJ1IiwiZG9tYWluOnZrLXBvcnRhbC5uZXQiLCJkb21haW46dXNlcmFwaS5jb20iLCJkb21haW46eWFuZGV4IiwiZG9tYWluOnlhbmRleC1iYW5rLm5ldCIsImRvbWFpbjp5YW5kZXguYWVybyIsImRvbWFpbjp5YW5kZXguYXoiLCJkb21haW46eWFuZGV4LmJ5IiwiZG9tYWluOnlhbmRleC5jbG91ZCIsImRvbWFpbjp5YW5kZXguY28uaWwiLCJkb21haW46eWFuZGV4LmNvbSIsImRvbWFpbjp5YW5kZXhhZGV4Y2hhbmdlLm5ldCIsImRvbWFpbjp5YW5kZXhjbG91ZC5uZXQiLCJkb21haW46eWFuZGV4Y29tLm5ldCIsImRvbWFpbjp5YW5kZXhtZXRyaWNhLmNvbSIsImRvbWFpbjp5YW5kZXh3ZWJjYWNoZS5uZXQiLCJkb21haW46eWFuZGV4d2ViY2FjaGUub3JnIiwiZG9tYWluOnlhc3RhdC5uZXQiLCJkb21haW46eWFzdGF0aWMubmV0IiwiZG9tYWluOmdpc21ldGVvLmNvbSIsImRvbWFpbjp0aWxkYWFwaS5jb20iLCJkb21haW46b2trby50diIsImRvbWFpbjpsZW50YS5jb20iLCJkb21haW46dnRicnVzc2lhLmNvbSIsImRvbWFpbjp2dGIyNC5jb20iLCJkb21haW46dnRiLnByb21vIiwiZG9tYWluOnZ0Yi5kaWdpdGFsIiwiZG9tYWluOnZ0Yi5jb20iLCJkb21haW46dG9jaGthLXRlY2guY29tIiwiZG9tYWluOnRvY2hrYS5jb20iLCJkb21haW46dGJhbmstb25saW5lLmNvbSIsImRvbWFpbjptb2V4LmNvbSIsImRvbWFpbjppbnZlc3RhbGZhYmFuay5jb20iLCJkb21haW46Z2F6cHJvbWJhbmsudGVjaCIsImRvbWFpbjpiZXRhLWJhbmsuY29tIiwiZG9tYWluOmFsZmFwcml2YXRlLmNvbSIsImRvbWFpbjphbGZhZnguY29tIiwiZG9tYWluOmFsZmFmaW5hbmNlLmJpeiIsImRvbWFpbjphbGZhYmFuay5jb20iLCJkb21haW46YWxmYS1iYW5rLmNvbSIsImRvbWFpbjoyZ2lzLmNvbS5jeSIsImRvbWFpbjoyZ2lzLmNvbSIsImRvbWFpbjoyZ2lzLmJ5IiwiZG9tYWluOjFjZnJlc2guY29tIl0sImlwIjpbImdlb2lwOnJ1IiwiZ2VvaXA6cHJpdmF0ZSIsIjEwLjAuMC4wXC84IiwiMTcyLjE2LjAuMFwvMTIiLCIxOTIuMTY4LjAuMFwvMTYiLCIxNjkuMjU0LjAuMFwvMTYiLCIyMjQuMC4wLjBcLzQiLCIyNTUuMjU1LjI1NS4yNTUiXSwib3V0Ym91bmRUYWciOiJkaXJlY3QiLCJfX25hbWVfXyI6IkRpcmVjdCBSdXNzaWEifSx7InR5cGUiOiJmaWVsZCIsImlkIjoiNkNGRUIyMDUtMjY0QS00RTMxLThBREYtMzkxMDY3Q0M3NTVDIiwiZG9tYWluIjpbImdlb3NpdGU6Y2F0ZWdvcnktYWRzIiwiZ2Vvc2l0ZTpjYXRlZ29yeS1hZHMtYWxsIl0sIm91dGJvdW5kVGFnIjoiYmxvY2siLCJfX25hbWVfXyI6IkJsb2NrIEFEIn1dLCJkb21haW5NYXRjaGVyIjoiaHlicmlkIn0=";
 
         function showError(message) {
           document.title = "Import Error";
@@ -105,18 +104,10 @@
           var happSubMarker = "/happ/sub/";
           var v2raytunSubMarker = "/v2raytun/sub/";
 
-          if (path.endsWith("/happ/route_rules")) {
-            redirectTo(
-              "Happ",
-              "happ://routing//add/" + HAPP_ROUTE_RULES
-            );
-            return;
-          }
-
-          if (path.endsWith("/v2raytun/ruleset")) {
+          if (path.endsWith("/v2raytun/route_rules")) {
             redirectTo(
               "v2RayTun",
-              "v2raytun://import-ruleset/" + V2RAYTUN_RULESET_URL
+              "v2rayTun://import_route/" + V2RAYTUN_ROUTE_RULES
             );
             return;
           }
@@ -156,7 +147,7 @@
           }
 
           showError(
-            "Unsupported path. Use /happ/route_rules, /happ/sub/<encoded-url>, /v2raytun/ruleset or /v2raytun/sub/<encoded-url>"
+            "Unsupported path. Use /happ/sub/<encoded-url>, /v2raytun/sub/<encoded-url> or /v2raytun/route_rules"
           );
         } catch (error) {
           showError(error.message || "Import failed.");
