@@ -35,8 +35,8 @@
   </head>
   <body>
     <main>
-      <h1>Friend Botik ❤️</h1>
-      <p id="status">Botik preparing a redirect...</p>
+      <h1>Friend ботик ❤️</h1>
+      <p id="status">Ботик готовит ссылку на VPN...</p>
       <p id="manual"></p>
     </main>
 
@@ -51,7 +51,7 @@
         var HAPP_ROUTE_RULES = "eyJOYW1lIjoiVlBOIEZyaWVuZCIsIkdsb2JhbFByb3h5IjoidHJ1ZSIsIlJvdXRlT3JkZXIiOiJibG9jay1kaXJlY3QtcHJveHkiLCJSZW1vdGVETlNUeXBlIjoiRG9IIiwiUmVtb3RlRE5TRG9tYWluIjoiIiwiUmVtb3RlRE5TSVAiOiIiLCJEb21lc3RpY0ROU1R5cGUiOiJEb1UiLCJEb21lc3RpY0ROU0RvbWFpbiI6IiIsIkRvbWVzdGljRE5TSVAiOiIiLCJHZW9pcHVybCI6Imh0dHBzOi8vc3RvcmFnZS55YW5kZXhjbG91ZC5uZXQvcmVhbG0tcHVibGljL2dlb2lwLmRhdCIsIkdlb3NpdGV1cmwiOiJodHRwczovL3N0b3JhZ2UueWFuZGV4Y2xvdWQubmV0L3JlYWxtLXB1YmxpYy9nZW9zaXRlLmRhdCIsIkxhc3RVcGRhdGVkIjoiMTc4MDMxODQ1NCIsIkRuc0hvc3RzIjp7fSwiRGlyZWN0U2l0ZXMiOltdLCJEaXJlY3RJcCI6W10sIlByb3h5U2l0ZXMiOltdLCJQcm94eUlwIjpbXSwiQmxvY2tTaXRlcyI6W10sIkJsb2NrSXAiOltdLCJEb21haW5TdHJhdGVneSI6IklQSWZOb25NYXRjaCIsIkZha2VETlMiOiJmYWxzZSIsIlVzZUNodW5rRmlsZXMiOiJmYWxzZSJ9";
 
         function showError(message) {
-          document.title = "Import Error";
+          document.title = "Ошибка открытия VPN";
 
           if (status) {
             status.className = "error";
@@ -64,17 +64,17 @@
         }
 
         function redirectTo(appName, deepLink) {
-          document.title = "Open " + appName;
+          document.title = "Открытие " + appName;
 
           if (status) {
             status.className = "";
-            status.textContent = "Redirecting to " + appName + ".";
+            status.textContent = "Переход " + appName;
           }
 
           if (manual) {
             var manualLink = document.createElement("a");
             manualLink.href = deepLink;
-            manualLink.textContent = "Open " + appName + " manually";
+            manualLink.textContent = "Открыть " + appName + " самому";
             manual.replaceChildren(manualLink);
           }
 
@@ -83,7 +83,7 @@
 
         function decodeSubscription(encodedSubscriptionUrl) {
           if (!encodedSubscriptionUrl) {
-            throw new Error("Subscription URL is missing.");
+            throw new Error("Отсутствует ссылка на VPN.");
           }
 
           var subscriptionUrl;
@@ -91,11 +91,11 @@
           try {
             subscriptionUrl = decodeURIComponent(encodedSubscriptionUrl);
           } catch (error) {
-            throw new Error("Subscription URL is not valid percent-encoded data.");
+            throw new Error("Неверная ссылка.");
           }
 
           if (!/^https?:\/\//i.test(subscriptionUrl)) {
-            throw new Error("Subscription URL must start with http:// or https://.");
+            throw new Error("Ссылка на VPN должна начинаться с http:// или https://.");
           }
 
           return subscriptionUrl;
@@ -155,7 +155,7 @@
           }
 
           showError(
-            "Unsupported path. Use /happ/sub/<encoded-url>, /happ/route_rules, /v2raytun/sub/<encoded-url> or /v2raytun/route_rules"
+            "Неверный путь. Используйте /happ/sub/<encoded-url>, /happ/route_rules, /v2raytun/sub/<encoded-url> или /v2raytun/route_rules"
           );
         } catch (error) {
           showError(error.message || "Import failed.");
